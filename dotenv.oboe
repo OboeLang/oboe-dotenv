@@ -1,0 +1,18 @@
+import os
+
+func load_dotenv(str path = ".env") {
+    var file
+    try {
+        file = os.read_file(path)
+    } catch (os.FileNotFoundError e) {
+        throw os.FileNotFoundError("dotenv: could not find file ${path}")
+    } finally {
+        var dotenv = {}
+        for (line in file.split("\n")) {
+            line = line.split("=")
+            // array temp = line[1].split("")
+            dotenv[line[0]] = line[1]
+        }
+        return dotenv
+    }
+}
